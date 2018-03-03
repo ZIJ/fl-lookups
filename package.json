@@ -1,0 +1,28 @@
+{
+  "name": "fl-lookups",
+  "version": "0.1.0",
+  "description": "Geosearch lookup service",
+  "main": "lookupService.js",
+  "dependencies": {
+    "elasticsearch": "^14.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZIJ/fl-lookups.git"
+  },
+  "keywords": [
+    "fatlama",
+    "elasticsearch",
+    "geospatial"
+  ],
+  "author": "Igor Zalutski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZIJ/fl-lookups/issues"
+  },
+  "homepage": "https://github.com/ZIJ/fl-lookups#readme"
+}
