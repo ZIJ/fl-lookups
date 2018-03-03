@@ -5,6 +5,7 @@
   "main": "lookupService.js",
   "dependencies": {
     "elasticsearch": "^14.1.0",
+    "express": "^4.16.2",
     "lodash": "^4.17.5"
   },
   "devDependencies": {},
