@@ -4,7 +4,8 @@
   "description": "Geosearch lookup service",
   "main": "lookupService.js",
   "dependencies": {
-    "elasticsearch": "^14.1.0"
+    "elasticsearch": "^14.1.0",
+    "lodash": "^4.17.5"
   },
   "devDependencies": {},
   "scripts": {
