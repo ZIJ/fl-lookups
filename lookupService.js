@@ -10,25 +10,38 @@ const client = new elasticsearch.Client({
     log: 'trace'
 });
 
-app.get('/geo', (request, response) => {
+app.get('/api/v1/search', (request, response) => {
     const { searchTerm, lat, lng } = request.query;
     client.search({
         index: 'items',
         body: {
             query: {
-                "bool" : {
-                    "must" : {
-                        "match_all" : {}
-                    },
-                    "filter" : {
-                        "geo_distance" : {
-                            "distance" : "2km",
-                            "location" : {
-                                "lat" : lat,
-                                "lon" : lng
+                bool: {
+                    must: [{
+                        geo_distance: {
+                            distance: '4km',
+                            'location' : {
+                                lat: lat,
+                                lon: lng
                             }
                         }
-                    } 
+                    }, {
+                        match_phrase: {
+                            'item_name': {
+                                query: searchTerm,
+                                slop: 2
+                            }
+                        }
+                    }],
+                    should: {
+                        geo_distance: {
+                            distance: '1km',
+                            'location' : {
+                                lat: lat,
+                                lon: lng
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -39,25 +52,7 @@ app.get('/geo', (request, response) => {
     });
 });
 
-app.get('/fuzzy', (request, response) => {
-    const { searchTerm } = request.query;
-    client.search({
-        index: 'items',
-        body: {
-            query: {
-                fuzzy: {
-                    'item_name': searchTerm
-                }
-            }
-        }
-    }).then(body => {
-        response.status(200).send(body.hits.hits); 
-    }).catch(error => {
-        response.status(500).send(error);
-    });
-})
-
-app.get('/all', (request, response) => {
+app.get('/api/v1/all', (request, response) => {
     client.search({
         index: 'items',
         body: {
@@ -71,6 +66,5 @@ app.get('/all', (request, response) => {
         response.status(500).send(error);
     });
 })
-
 
 app.listen(3000, () => console.log('Listening on port 3000'));
