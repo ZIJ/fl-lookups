@@ -2,7 +2,7 @@
   "name": "fl-lookups",
   "version": "0.1.0",
   "description": "Geosearch lookup service",
-  "main": "lookupService.js",
+  "main": "app.js",
   "dependencies": {
     "elasticsearch": "^14.1.0",
     "express": "^4.16.2",
