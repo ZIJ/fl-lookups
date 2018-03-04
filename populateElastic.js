@@ -17,20 +17,35 @@ const bulk = _.flatten(data.items.map(item => {
         {
             'item_name': item.item_name,
             'item_url': item.item_url,
-            location: {
-                lat: item.lat,
-                lon: item.lng,
-            }
+            location: item.lat + ',' + item.lng
         }
     ];
 }));
 
-client.bulk({
-    body: bulk
-}, (error, response) => {
-    if (error) {
-        console.trace(error);
-    } else {
-        console.log(response);
+client.indices.create({
+    index: 'items',
+})
+.then(response => console.log(response))
+.then(() => client.indices.putMapping({
+    index: 'items',
+    type: 'fl-item',
+    body: {
+        properties: {
+            item_name: {
+                type: 'text'
+            },
+            item_url: {
+                type: 'text'
+            },
+            location: {
+                type: 'geo_point'
+            }
+        }   
     }
-});
+}))
+.then(response => console.log(response))
+.then(() => client.bulk({
+    body: bulk
+}))
+.then(response => console.log(response))
+.catch(error => console.trace(error));

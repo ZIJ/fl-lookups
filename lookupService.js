@@ -10,7 +10,7 @@ const client = new elasticsearch.Client({
     log: 'trace'
 });
 
-app.get('/search', (request, response) => {
+app.get('/geo', (request, response) => {
     const { searchTerm, lat, lng } = request.query;
     client.search({
         index: 'items',
@@ -20,32 +20,57 @@ app.get('/search', (request, response) => {
                     "must" : {
                         "match_all" : {}
                     },
-                    "must": {
-                        "filter" : {
-                            "geo_distance" : {
-                                "distance" : "200km",
-                                "pin.location" : {
-                                    "lat" : lat,
-                                    "lon" : lng
-                                }
+                    "filter" : {
+                        "geo_distance" : {
+                            "distance" : "2km",
+                            "location" : {
+                                "lat" : lat,
+                                "lon" : lng
                             }
                         }
-                    },
-                    "must": {
-                        "fuzzy": {
-                            "item_name": searchTerm
-                        }
-                    }
+                    } 
                 }
             }
         }
-    }, (error, searchResponse) => {
-        if (error) {
-            response.send(error);
-        } else {
-            response.send(searchResponse);
+    }).then(body => {
+        response.status(200).send(body.hits.hits); 
+    }).catch(error => {
+        response.status(500).send(error);
+    });
+});
+
+app.get('/fuzzy', (request, response) => {
+    const { searchTerm } = request.query;
+    client.search({
+        index: 'items',
+        body: {
+            query: {
+                fuzzy: {
+                    'item_name': searchTerm
+                }
+            }
         }
+    }).then(body => {
+        response.status(200).send(body.hits.hits); 
+    }).catch(error => {
+        response.status(500).send(error);
     });
 })
+
+app.get('/all', (request, response) => {
+    client.search({
+        index: 'items',
+        body: {
+            query: {
+                match_all: {}
+            }
+        }
+    }).then(body => {
+        response.status(200).send(body.hits.hits); 
+    }).catch(error => {
+        response.status(500).send(error);
+    });
+})
+
 
 app.listen(3000, () => console.log('Listening on port 3000'));
