@@ -1,11 +1,9 @@
 'use strict';
 
-const elasticsearch = require('elasticsearch');
-
 class EsItemsRepository {
 
-    constructor(esConfig) {
-        this.client = new elasticsearch.Client(esConfig);
+    constructor(esClient) {
+        this.client = esClient;
     }
 
     search(term, latitude, longitude) {

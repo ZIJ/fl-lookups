@@ -1,0 +1,126 @@
+{
+    "took": 13,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "skipped": 0,
+      "failed": 0
+    },
+    "hits": {
+      "total": 14,
+      "max_score": 3.0339398,
+      "hits": [
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "SZoU8mEB7lgfsg_trweU",
+          "_score": 3.0339398,
+          "_source": {
+            "item_name": "Canon 5D Mii ShootingKit and 28mm, 50mm and 105mm Lenses",
+            "item_url": "london\/hire-canon-5d-mark-2-84296202",
+            "location": "51.5209999,-0.213523999"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "F5oU8mEB7lgfsg_trwiX",
+          "_score": 2.8884969,
+          "_source": {
+            "item_name": "Canon 7D Camera",
+            "item_url": "london\/hire-camera-7d-camera-65637575",
+            "location": "51.4970016,-0.220615"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "zZoU8mEB7lgfsg_trwqk",
+          "_score": 2.855682,
+          "_source": {
+            "item_name": "Canon 5Ds Camera",
+            "item_url": "london\/hire-canon-5ds-camera-82455027",
+            "location": "51.5039177,-0.253675312"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "qpoU8mEB7lgfsg_trweW",
+          "_score": 2.7170115,
+          "_source": {
+            "item_name": "Canon 7DCamera",
+            "item_url": "london\/hire-camera-7d-camera-65637575",
+            "location": "51.4969864,-0.220614702"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "OZoU8mEB7lgfsg_trw6x",
+          "_score": 2.5819902,
+          "_source": {
+            "item_name": "Canon 6d + Canon 24-105 + Sigma 70-300 + battery Grip",
+            "item_url": "london\/hire-canon-6d-with-or-without-battery-grip-81502078",
+            "location": "51.509201,-0.230410993"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "T5oU8mEB7lgfsg_trw6x",
+          "_score": 2.571035,
+          "_source": {
+            "item_name": "Canon 24-105 F4",
+            "item_url": "london\/hire-canon-24105-f4-59768706",
+            "location": "51.5088997,-0.230223998"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "YpoU8mEB7lgfsg_trwul",
+          "_score": 2.4843118,
+          "_source": {
+            "item_name": "Canon EF 24-105 IS Lens",
+            "item_url": "london\/hire-canon-ef-24105-is-lens-71344378",
+            "location": "51.5230942,-0.199969202"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "y5oU8mEB7lgfsg_trwmg",
+          "_score": 2.4076602,
+          "_source": {
+            "item_name": "Canon 24-70 F2.8 Mark II L",
+            "item_url": "london\/hire-canon-2470-f28-mark-ii-l-56741809",
+            "location": "51.5366783,-0.214181796"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "zJoU8mEB7lgfsg_trwqk",
+          "_score": 2.4076602,
+          "_source": {
+            "item_name": "Canon EF 24-70mm F2.8L II Lens",
+            "item_url": "london\/hire-canon-ef-2470mm-f28l-ii-lens-48703264",
+            "location": "51.5046349,-0.255088598"
+          }
+        },
+        {
+          "_index": "items",
+          "_type": "fl-item",
+          "_id": "gZoU8mEB7lgfsg_trw2v",
+          "_score": 2.3679986,
+          "_source": {
+            "item_name": "Canon 5D Mark 2 camera kit ",
+            "item_url": "london\/hire-canon-5dmkii-photography-kit--34374801",
+            "location": "51.4993553,-0.212017804"
+          }
+        }
+      ]
+    }
+}
