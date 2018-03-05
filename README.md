@@ -67,6 +67,7 @@ $ curl "http://localhost:3000/api/v1/items/search?lat=51.5223007&lng=-0.21710099
     - highly scaleable
     - rich text search API out of the box
     - high-level geo API out of the box
+    - geosharding
     - harder to maintain at scale than rdbms
 - mongodb
     - easy to get up and running
@@ -76,4 +77,19 @@ $ curl "http://localhost:3000/api/v1/items/search?lat=51.5223007&lng=-0.21710099
     - harder to maintain at scale than rdbms
     
 All options except for sqlite are feasible for production use. Hard to go wrong with either Postgres or Elastic, both are battle-tested at scale. Elastic though is future-proof, scaleable and provides everything out of the box, so going with it.
+
+As for primary datastore, it doesn't have to be Elastic. Relational DBs generally work better for business data. But since we're only concerned with search, leaving this out.
+
+#### Backend toolkit
+
+For a lightweight stateless microservice pretty much anything would do quite well. The service itself is unlikely to become a performance bottleneck, and even if it does, more nodes can be added behind a load balancer.
+
+Reasoning behind choosing Node:
+- Speed of development
+- Widely supported by cloud and serverless platforms
+- Low memory cost per request
+
+For the web api framework in Node, there are multiple options too. Express is the most popular one.
+
+Unit testing done with Jest because it's both fast and quick to set up.
 
