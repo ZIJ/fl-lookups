@@ -14,7 +14,8 @@
   },
   "scripts": {
     "pretest": "./node_modules/.bin/eslint . --ext .js",
-    "test": "jest"
+    "test": "jest",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
