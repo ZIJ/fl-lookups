@@ -1,26 +1,94 @@
-# Backend Challenge
-## Introduction
-Fat Lama relies heavily on our search in order for users to be able to find the items they need. The main two factors in the search are:
-- **Text match**: the user types a word or phrase that they want to find, and the search returns items that match this.
-- **Location**: the user indicates their location (through geolocation or through typing in the location search box) and the search returns items near the user
+# fl-lookups
+Geo search endpoint powered by ElasticSearch
 
-On the production web & mobile app there are other factors that come into play such as lender rating, response time, categories, time since listing, and more. For this challenge though, we want you to focus only on the two main factors given above.
+## Usage
 
-## The Challenge
-We want you to build a `GET /search` endpoint that will return the most appropriate 20 items given `searchTerm`, `lat` (latitude) and `lng` (longitude). e.g. `/search?searchTerm=camera&lat=51.948&lng=0.172943`. It is up to you to decide how to weight the two factors to return the most relevant results. We have provided you with a sqlite database containing just under 2000 items with the relevant fields.
+#### Prerequisites
+- docker
+- node.js
 
-When you are finished, write up a short summary of why you made the choices you did in terms of technology and design. This should be no more than 500 words.
+#### Set up local ElasticSearch cluster
 
-## Things to think about:
-- Think about points of failure and how your endpoint will perform under load.
-- Testing: use whatever tools you prefer to test your code appropriately
-- Try to implement appropriate [separation of concerns](https://effectivesoftwaredesign.com/2012/02/05/separation-of-concerns/) & modular code
-- Think hard about naming of functions and variables. Your code must be readable
-- Code style & file structure is up to you, but make sure it is consistent and easy to understand
+```
+$ docker pull docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2
+...
+$ docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+```
+#### Hydrate ElasticSearch with test data
 
-## Checklist for Challenge
-- [ ] Duplicate this repo (please do not fork it, see [instructions](https://help.github.com/articles/duplicating-a-repository/)). Bitbucket offers free private repos if you don't want to use a public one.
-- [ ] Build API endpoint for Fat Lama search
-- [ ] Ensure all code is sufficiently tested
-- [ ] Write brief summary on the approach you took and the tools you used (max 500 words)
-- [ ] Send us a link to your new repo.
+```
+$ node ./scripts/populateElasticsearch.js
+```
+
+#### Run app
+
+```
+$ npm test
+...
+$ npm start
+```
+```
+$ curl "http://localhost:3000/api/v1/items/search?lat=51.5223007&lng=-0.217100999&searchTerm=canon%20lens" 
+```
+## Tech stack
+
+#### Goals
+
+- Design and implement /search endpoint according to problem statement
+- Build with scalability in mind (i.e. making it scaleable should be much easier than rewrite)
+- Critical test coverage
+
+#### Non-goals
+
+- Production-ready app (ci/cd, cloud infra, logging, security, edge cases)
+- Scaleable as is (i.e. scaling is trivial without any changes to code)
+- Full test coverage
+
+#### Assumptions
+
+- Endpoint is used directly by client apps (web and mobile)
+- Full cycle usage manner, not autocomplete (i.e. click search -> see results, like airbnb or foursquare)
+- List view first, map view second. Item info matters more than location nuances within reasonable bounds.
+- Read-skewed usage (10^1+ times more reads than writes to storage)
+
+#### Search engine options
+
+- sqlite & spatialite
+    - easy to get up and running
+    - limited full-text search capabilities
+    - not scaleable
+    - low-level geo API (SpatialSQL)
+- postgres & postgis
+    - robust / low maintenance
+    - fast (likely won't need horizontal scaling)
+    - sharding is difficult
+    - low-level geo API (SpatialSQL)
+- elasticsearch
+    - highly scaleable
+    - rich text search API out of the box
+    - high-level geo API out of the box
+    - geosharding
+    - harder to maintain at scale than rdbms
+- mongodb
+    - easy to get up and running
+    - high-level geo API out of the box
+    - quite scaleable, but not as good as ES
+    - limited / lower level text search api
+    - harder to maintain at scale than rdbms
+    
+All options except for sqlite are feasible for production use. Hard to go wrong with either Postgres or Elastic, both are battle-tested at scale. Elastic though is future-proof, scaleable and provides everything out of the box. With heavy write usage Mongodb might have been a better option, but since we're assuming low write load, going with Elastic.
+
+As for primary datastore, it doesn't have to be Elastic. Relational DBs generally work better for business data. But since we're only concerned with search, leaving this out.
+
+#### Backend toolkit
+
+For a lightweight stateless microservice pretty much anything would do quite well. The service itself is unlikely to become a performance bottleneck, and even if it does, more nodes can be added behind a load balancer.
+
+Reasoning behind choosing Node:
+- Speed of development
+- Widely supported by cloud and serverless platforms
+- Low memory cost per request
+
+For the web api framework in Node, there are multiple options too. Express is the most popular one.
+
+Unit testing done with Jest because it's both fast and quick to set up.
