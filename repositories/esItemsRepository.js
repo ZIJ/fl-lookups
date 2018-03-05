@@ -10,7 +10,7 @@ class EsItemsRepository {
         const query = buildSearchQuery(term, latitude, longitude);
         return this.client.search({
             index: 'items',
-            body: { query }
+            body: { query, size: 20 }
         }).then(body => {
             const items = body.hits.hits.map(hit => hit._source );
             return { items };
@@ -37,7 +37,23 @@ const buildSearchQuery = (term, latitude, longitude) => ({
     bool: {
         must: [{
             geo_distance: {
-                distance: '4km',
+                distance: '100km',
+                'location' : {
+                    lat: latitude,
+                    lon: longitude
+                }
+            }
+        }, {
+            match: {
+                'item_name': {
+                    query: term,
+                    minimum_should_match: "30%"
+                }
+            }
+        }],
+        should: [{
+            geo_distance: {
+                distance: '2km',
                 'location' : {
                     lat: latitude,
                     lon: longitude
@@ -47,19 +63,10 @@ const buildSearchQuery = (term, latitude, longitude) => ({
             match_phrase: {
                 'item_name': {
                     query: term,
-                    slop: 2
+                    slop: 50
                 }
             }
-        }],
-        should: {
-            geo_distance: {
-                distance: '1km',
-                'location' : {
-                    lat: latitude,
-                    lon: longitude
-                }
-            }
-        }
+        }]
     }
 });
 
