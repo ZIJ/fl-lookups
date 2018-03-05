@@ -92,4 +92,3 @@ Reasoning behind choosing Node:
 For the web api framework in Node, there are multiple options too. Express is the most popular one.
 
 Unit testing done with Jest because it's both fast and quick to set up.
-
