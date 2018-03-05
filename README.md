@@ -76,7 +76,7 @@ $ curl "http://localhost:3000/api/v1/items/search?lat=51.5223007&lng=-0.21710099
     - limited / lower level text search api
     - harder to maintain at scale than rdbms
     
-All options except for sqlite are feasible for production use. Hard to go wrong with either Postgres or Elastic, both are battle-tested at scale. Elastic though is future-proof, scaleable and provides everything out of the box, so going with it.
+All options except for sqlite are feasible for production use. Hard to go wrong with either Postgres or Elastic, both are battle-tested at scale. Elastic though is future-proof, scaleable and provides everything out of the box. With heavy write usage Mongodb might have been a better option, but since we're assuming low write load, going with Elastic.
 
 As for primary datastore, it doesn't have to be Elastic. Relational DBs generally work better for business data. But since we're only concerned with search, leaving this out.
 
