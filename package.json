@@ -9,9 +9,11 @@
     "lodash": "^4.17.5"
   },
   "devDependencies": {
+    "eslint": "^4.18.2",
     "jest": "^22.4.2"
   },
   "scripts": {
+    "pretest": "./node_modules/.bin/eslint . --ext .js",
     "test": "jest"
   },
   "repository": {

@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 'use strict';
 
 module.exports = () => {
@@ -6,4 +8,4 @@ module.exports = () => {
     response.status = jest.fn(() => response);
     response.send = jest.fn(() => response);
     return response;
-}
+};

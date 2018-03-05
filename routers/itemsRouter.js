@@ -11,4 +11,4 @@ module.exports = (itemsRepository) => {
     itemsRouter.get('/some', some(itemsRepository));
 
     return itemsRouter;
-}
+};

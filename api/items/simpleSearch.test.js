@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 'use strict';
 
 const simpleSearch = require('./simpleSearch');
@@ -30,7 +32,7 @@ test('status 200 upon success', done => {
     };
     const search = simpleSearch(repository);
     const response = mockResponse();
-    const searchResult = search(mockRequest(), response);
+    search(mockRequest(), response);
     setTimeout(() => {
         expect(response.status).toBeCalledWith(200);
         done();
@@ -43,7 +45,7 @@ test('sends through data from repository', done => {
     };
     const search = simpleSearch(repository);
     const response = mockResponse();
-    const searchResult = search(mockRequest(), response);
+    search(mockRequest(), response);
     setTimeout(() => {
         expect(response.send).toBeCalledWith('data');
         done();
@@ -56,7 +58,7 @@ test('status 500 upon error', done => {
     };
     const search = simpleSearch(repository);
     const response = mockResponse();
-    const searchResult = search(mockRequest(), response);
+    search(mockRequest(), response);
     setTimeout(() => {
         expect(response.status).toBeCalledWith(500);
         done();
@@ -69,7 +71,7 @@ test('sends through error from repository', done => {
     };
     const search = simpleSearch(repository);
     const response = mockResponse();
-    const searchResult = search(mockRequest(), response);
+    search(mockRequest(), response);
     setTimeout(() => {
         expect(response.send).toBeCalledWith('error');
         done();

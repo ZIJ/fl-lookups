@@ -4,10 +4,10 @@
 module.exports = (repository) => (request, response) => {
     const { searchTerm, lat, lng } = request.query;
     repository.search(searchTerm, lat, lng)
-    .then(data => {
-        response.status(200).send(data);
-    })
-    .catch(error => {
-        response.status(500).send(error);
-    });
-}
+        .then(data => {
+            response.status(200).send(data);
+        })
+        .catch(error => {
+            response.status(500).send(error);
+        });
+};

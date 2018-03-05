@@ -7,8 +7,8 @@ const EsItemsRepository = require('./repositories/esItemsRepository');
 const itemsRouter = require('./routers/itemsRouter');
 
 const app = express();
-const esClient = new elasticsearch.Client(config.elasticsearch)
+const esClient = new elasticsearch.Client(config.elasticsearch);
 const itemsRepository = new EsItemsRepository(esClient);
 
 app.use('/api/v1/items', itemsRouter(itemsRepository));
-app.listen(3000, () => console.log('Listening on port 3000'));
+app.listen(3000);
