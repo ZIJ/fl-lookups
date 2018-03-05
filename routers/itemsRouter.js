@@ -1,6 +1,6 @@
 const express = require('express');
-const simpleSearch = require('../service/items/simpleSearch');
-const some = require('../service/items/some');
+const simpleSearch = require('../api/items/simpleSearch');
+const some = require('../api/items/some');
 
 module.exports = (itemsRepository) => {
     const itemsRouter = express.Router();
